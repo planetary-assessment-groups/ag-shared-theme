@@ -1,7 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
-  <article>
-    <h1>{{ page.title }}</h1>
-    {{ page.content | safe }}
-  </article>
+  <section>
+    <article>
+      <header class="major">
+        <h2>{{ page.title }}</h2>
+      </header>
+      <div class="meeting-meta">
+        {% if page.extra.location %}
+          <p><i class="fa fa-map-marker-alt"></i>&nbsp; {{ page.extra.location }}</p>
+        {% endif %}
+        {% if page.date %}
+          <p><i class="fa fa-calendar"></i>&nbsp;
+            {{ page.date | date(format="%B %e, %Y") }}{% if page.extra.end_date %} &ndash; {{ page.extra.end_date }}{% endif %}
+          </p>
+        {% endif %}
+        {% if page.extra.format %}
+          <p><i class="fa fa-desktop"></i>&nbsp; {{ page.extra.format }}</p>
+        {% endif %}
+        {% if page.extra.registration_url %}
+          <p><a class="button-main" href="{{ page.extra.registration_url }}" target="_blank" rel="noreferrer">Registration&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a></p>
+        {% endif %}
+      </div>
+      {{ page.content | safe }}
+    </article>
+  </section>
 {% endblock content %}

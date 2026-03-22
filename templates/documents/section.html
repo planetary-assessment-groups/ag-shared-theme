@@ -1,10 +1,16 @@
 {% extends "base.html" %}
+{% import "macros/collections.html" as collections %}
 {% block content %}
-  <h1>{{ section.title }}</h1>
-  {{ section.content | safe }}
-  <ul>
-  {% for page in section.pages %}
-    <li><a href="{{ page.permalink }}">{{ page.title }}</a></li>
-  {% endfor %}
-  </ul>
+  <section>
+    <header class="major">
+      <h2>{{ section.title }}</h2>
+    </header>
+    {{ section.content | safe }}
+    {% if paginator %}
+      {{ collections::page_list(pages=paginator.pages) }}
+      {{ collections::pagination(paginator=paginator) }}
+    {% elif section.pages | length > 0 %}
+      {{ collections::page_list(pages=section.pages) }}
+    {% endif %}
+  </section>
 {% endblock content %}

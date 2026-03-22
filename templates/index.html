@@ -1,21 +1,39 @@
 {% extends "base.html" %}
 {% import "macros/collections.html" as collections %}
 {% block content %}
-  {{ section.content | safe }}
-  {% set meetings = get_section(path="meetings/_index.md") %}
+  <section>
+    {{ section.content | safe }}
+  </section>
+
   {% set news = get_section(path="news/_index.md") %}
   {% set documents = get_section(path="documents/_index.md") %}
+  {% set meetings = get_section(path="meetings/_index.md") %}
   {% set today = now() | date(format="%Y-%m-%d") %}
+
   <section>
-    <h2>News</h2>
+    <header class="major">
+      <h3>News</h3>
+    </header>
     {{ collections::featured_pages(pages=news.pages, limit=4) }}
+    {% if config.extra.news_archive_url %}
+    <a class="button-main" href="{{ config.extra.news_archive_url }}">News Archive&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a>
+    {% endif %}
   </section>
+
   <section>
-    <h2>Documents</h2>
-    {{ collections::featured_pages(pages=documents.pages, limit=6) }}
-  </section>
-  <section>
-    <h2>Meetings</h2>
+    <header class="major">
+      <h3>Recent Meetings</h3>
+    </header>
     {{ collections::meeting_pages(pages=meetings.pages, today=today, limit=3) }}
+    {% if config.extra.meetings_archive_url %}
+    <a class="button-main" href="{{ config.extra.meetings_archive_url }}">Meeting Archive&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a>
+    {% endif %}
+  </section>
+
+  <section>
+    <header class="major">
+      <h3>Documents</h3>
+    </header>
+    {{ collections::featured_pages(pages=documents.pages, limit=6) }}
   </section>
 {% endblock content %}

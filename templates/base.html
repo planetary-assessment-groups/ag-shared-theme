@@ -4,31 +4,129 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <title>{% block title %}{{ config.title }}{% endblock title %}</title>
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
-  >
-  <link rel="stylesheet" href="{{ get_url(path='css/theme.css') }}">
+  {% block meta %}{% endblock meta %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{{ get_url(path='css/theme.css') }}" />
+  {% block head %}{% endblock head %}
 </head>
 <body>
-  <div class="layout">
-    <aside class="sidebar">
-      <h1 class="site-title">{{ config.title }}</h1>
-      {% if nav and nav.main %}
-      <nav>
-        <ul>
-          {% for item in nav.main %}
-            {{ collections::nav_item(item=item) }}
-          {% endfor %}
-        </ul>
-      </nav>
+  <div id="wrapper">
+    <!-- Main -->
+    <div id="main">
+      {% block banner %}
+      {% if config.extra.banner_image %}
+      <div class="banner" style="background-image: url('{{ config.extra.banner_image }}');">
+        <div class="inner">
+          {% if config.extra.logo %}
+          <a class="main-logo" href="/">
+            <img src="{{ config.extra.logo }}" alt="{{ config.title }} logo" />
+          </a>
+          {% endif %}
+          <h1>{{ config.extra.banner_title | default(value=config.title) }}</h1>
+        </div>
+      </div>
       {% endif %}
-    </aside>
-    <main class="content">
-      {% block content %}{% endblock content %}
-    </main>
+      {% endblock banner %}
+      <div class="inner">
+        {% block content %}{% endblock content %}
+      </div>
+    </div>
+
+    <!-- Mobile Toggle (outside sidebar for correct positioning) -->
+    <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle navigation">
+      <i class="fa fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <div class="inner">
+        {% if nav and nav.main %}
+        <nav id="menu">
+          <ul>
+            {% for item in nav.main %}
+              {{ collections::nav_item(item=item) }}
+            {% endfor %}
+          </ul>
+        </nav>
+        {% endif %}
+
+        {% block sidebar %}{% endblock sidebar %}
+
+        {% if config.extra.social %}
+        <div class="sidebar-footer">
+          <header class="major">
+            <h2>Connect With Us</h2>
+          </header>
+          <ul class="contact-icons">
+            {% if config.extra.social.home %}
+            <li><a href="{{ config.extra.social.home }}" aria-label="Home"><i class="fa fa-home"></i></a></li>
+            {% endif %}
+            {% if config.extra.social.twitter %}
+            <li><a href="{{ config.extra.social.twitter }}" target="_blank" rel="noreferrer" aria-label="X / Twitter"><i class="fa-brands fa-square-x-twitter"></i></a></li>
+            {% endif %}
+            {% if config.extra.social.facebook %}
+            <li><a href="{{ config.extra.social.facebook }}" target="_blank" rel="noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a></li>
+            {% endif %}
+            {% if config.extra.social.youtube %}
+            <li><a href="{{ config.extra.social.youtube }}" target="_blank" rel="noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a></li>
+            {% endif %}
+            {% if config.extra.social.instagram %}
+            <li><a href="{{ config.extra.social.instagram }}" target="_blank" rel="noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
+            {% endif %}
+            {% if config.extra.social.linkedin %}
+            <li><a href="{{ config.extra.social.linkedin }}" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a></li>
+            {% endif %}
+          </ul>
+        </div>
+        {% endif %}
+
+        <footer id="footer">
+          {% if config.extra.footer_links %}
+          <p>
+            {% for link in config.extra.footer_links %}
+            <a href="{{ link.url }}"{% if link.external %} target="_blank" rel="noreferrer"{% endif %}>{{ link.label }}</a>{% if not loop.last %} | {% endif %}
+            {% endfor %}
+          </p>
+          {% endif %}
+          <p>&copy; {{ now() | date(format="%Y") }} {{ config.extra.copyright | default(value=config.title) }}</p>
+        </footer>
+      </div>
+    </div>
+
+    <div id="sidebar-overlay"></div>
   </div>
+
+  <script>
+  (function() {
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('sidebar-overlay');
+    var toggle = document.getElementById('sidebar-toggle');
+
+    function toggleSidebar(e) {
+      e.preventDefault();
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+    }
+
+    toggle.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', closeSidebar);
+
+    // Collapsible nav openers
+    var openers = document.querySelectorAll('#menu span.opener');
+    openers.forEach(function(opener) {
+      opener.addEventListener('click', function(e) {
+        e.preventDefault();
+        this.classList.toggle('active');
+      });
+    });
+  })();
+  </script>
 </body>
 </html>

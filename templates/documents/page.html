@@ -1,7 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
-  <article>
-    <h1>{{ page.title }}</h1>
-    {{ page.content | safe }}
-  </article>
+  <section>
+    <article>
+      <header class="major">
+        <h2>{{ page.title }}</h2>
+      </header>
+      {% if page.extra.doc_type or page.date %}
+      <p>
+        {% if page.extra.doc_type %}<strong>{{ page.extra.doc_type }}</strong> &middot; {% endif %}
+        {% if page.date %}{{ page.date | date(format="%B %e, %Y") }}{% endif %}
+      </p>
+      {% endif %}
+      {% if page.extra.file %}
+      <p><a class="button-main" href="{{ page.extra.file }}" target="_blank" rel="noreferrer">Download Document&nbsp;&nbsp;<i class="fa fa-download"></i></a></p>
+      {% endif %}
+      {{ page.content | safe }}
+    </article>
+  </section>
 {% endblock content %}

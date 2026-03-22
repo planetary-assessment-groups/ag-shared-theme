@@ -1,10 +1,40 @@
 {% extends "base.html" %}
+{% import "macros/collections.html" as collections %}
 {% block content %}
-  <h1>{{ section.title }}</h1>
-  {{ section.content | safe }}
-  <ul>
-  {% for page in section.pages %}
-    <li><a href="{{ page.permalink }}">{{ page.title }}</a></li>
-  {% endfor %}
-  </ul>
+  <section>
+    <header class="major">
+      <h2>{{ section.title }}</h2>
+    </header>
+    {{ section.content | safe }}
+    {% if paginator %}
+    <ul class="card-list">
+      {% for page in paginator.pages %}
+        <li>
+          <a href="{{ page.permalink }}">{{ page.title }}</a>
+          {% if page.extra.location %}<small>{{ page.extra.location }}</small>{% endif %}
+          {% if page.date %}
+            <small>
+              {{ page.date | date(format="%B %e, %Y") }}{% if page.extra.end_date %} &ndash; {{ page.extra.end_date }}{% endif %}
+            </small>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+    {{ collections::pagination(paginator=paginator) }}
+    {% elif section.pages | length > 0 %}
+    <ul class="card-list">
+      {% for page in section.pages %}
+        <li>
+          <a href="{{ page.permalink }}">{{ page.title }}</a>
+          {% if page.extra.location %}<small>{{ page.extra.location }}</small>{% endif %}
+          {% if page.date %}
+            <small>
+              {{ page.date | date(format="%B %e, %Y") }}{% if page.extra.end_date %} &ndash; {{ page.extra.end_date }}{% endif %}
+            </small>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </section>
 {% endblock content %}
