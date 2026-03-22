@@ -11,7 +11,7 @@
         {% endif %}
         {% if page.date %}
           <p><i class="fa fa-calendar"></i>&nbsp;
-            {{ page.date | date(format="%B %e, %Y") }}{% if page.extra.end_date %} &ndash; {{ page.extra.end_date }}{% endif %}
+            {{ page.date | date(format="%B %e, %Y") }}{% if page.extra.end_date %} &ndash; {{ page.extra.end_date | date(format="%B %e, %Y") }}{% endif %}
           </p>
         {% endif %}
         {% if page.extra.format %}

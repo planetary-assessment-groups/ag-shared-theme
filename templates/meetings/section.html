@@ -14,7 +14,7 @@
           {% if page.extra.location %}<small>{{ page.extra.location }}</small>{% endif %}
           {% if page.date %}
             <small>
-              {{ page.date | date(format="%B %e, %Y") }}{% if page.extra.end_date %} &ndash; {{ page.extra.end_date }}{% endif %}
+              {{ page.date | date(format="%B %e, %Y") }}{% if page.extra.end_date %} &ndash; {{ page.extra.end_date | date(format="%B %e, %Y") }}{% endif %}
             </small>
           {% endif %}
         </li>
@@ -29,7 +29,7 @@
           {% if page.extra.location %}<small>{{ page.extra.location }}</small>{% endif %}
           {% if page.date %}
             <small>
-              {{ page.date | date(format="%B %e, %Y") }}{% if page.extra.end_date %} &ndash; {{ page.extra.end_date }}{% endif %}
+              {{ page.date | date(format="%B %e, %Y") }}{% if page.extra.end_date %} &ndash; {{ page.extra.end_date | date(format="%B %e, %Y") }}{% endif %}
             </small>
           {% endif %}
         </li>
