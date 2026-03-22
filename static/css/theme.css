@@ -17,8 +17,8 @@
   --ag-border: rgba(210, 215, 217, 0.75);
   --ag-highlight: #62d4e5;
   --ag-bg: #ffffff;
-  --ag-sidebar-bg: #ffffff;
-  --ag-sidebar-width: 26rem;
+  --ag-sidebar-bg: #f5f6f7;
+  --ag-sidebar-width: 26em;
   --ag-banner-height: 200px;
   --ag-font-body: "Open Sans", sans-serif;
   --ag-font-heading: "Roboto Slab", serif;
@@ -295,7 +295,7 @@ th {
 }
 
 #main > .inner {
-  padding: 3em 4em 4em;
+  padding: 0 6em 0.1em 6em;
   max-width: 110em;
   margin: 0 auto;
 }
@@ -310,7 +310,7 @@ th {
 
 /* ----- Section Headings with Accent Underline ----- */
 #main > .inner > section {
-  padding: 2.5em 0 2em;
+  padding: 6em 0 4em 0;
   border-top: solid 2px var(--ag-border);
 }
 
@@ -325,7 +325,12 @@ header.major {
 
 header.major > h2,
 header.major > h3 {
+  font-size: 1em;
+  font-weight: 400;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
   margin-bottom: 0.25em;
+  margin-top: -0.5em;
 }
 
 header.major > :last-child {
@@ -483,9 +488,12 @@ a.image-link img {
 }
 
 #sidebar > .inner {
-  padding: 2em 2em 2.5em;
+  padding: 2.22222em 2.22222em 2.44444em 2.22222em;
   width: var(--ag-sidebar-width);
-  position: relative;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 /* ----- Sidebar Navigation ----- */
@@ -505,7 +513,7 @@ a.image-link img {
   font-size: 0.9em;
   letter-spacing: 0.075em;
   line-height: 1.4;
-  padding: 0.6em 0;
+  padding: 0.625em 0;
   text-transform: uppercase;
   text-decoration: none;
   font-weight: 400;
@@ -530,7 +538,7 @@ a.image-link img {
 /* Collapsible sub-menus */
 #menu > ul > li > ul {
   display: none;
-  margin: 0 0 0.8em 0;
+  margin: 0.5em 0 1.5em 0;
   padding-left: 1em;
 }
 
@@ -538,6 +546,7 @@ a.image-link img {
 #menu > ul > li > ul span {
   font-size: 0.85em;
   color: #000;
+  text-transform: none;
 }
 
 /* Opener (collapsible parent) */
@@ -635,23 +644,24 @@ a.opener.active::after {
   position: fixed;
   top: 0;
   left: 0;
-  width: 3.5em;
-  height: 3.5em;
+  width: 4em;
+  height: 4em;
   z-index: 1001;
-  font-size: 1.2rem;
-  line-height: 3.5em;
+  font-size: 1.5rem;
+  line-height: 4em;
   text-align: center;
-  color: var(--ag-sidebar-link);
-  background: rgba(255, 255, 255, 0.9);
+  color: #fff;
+  background: rgba(34, 34, 34, 0.5);
   border: 0;
   border-radius: 0 0 6px 0;
   cursor: pointer;
-  transition: color 0.2s;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 .sidebar-toggle:hover {
-  color: var(--ag-highlight);
+  background: rgba(34, 34, 34, 0.75);
 }
 
 /* ----- Responsive: Large ----- */
@@ -661,11 +671,19 @@ a.opener.active::after {
   }
 
   #main > .inner {
-    padding: 2.5em 3.5em 3em;
+    padding: 0 5em 0.1em 5em;
+  }
+
+  #main > .inner > section {
+    padding: 5em 0 3em 0;
   }
 
   #main > .banner > .inner {
-    padding: 0 3.5em;
+    padding: 0 5em;
+  }
+
+  #sidebar > .inner {
+    padding: 1.66667em 1.66667em 1.33333em 1.66667em;
   }
 }
 
@@ -676,11 +694,15 @@ a.opener.active::after {
   }
 
   #main > .inner {
-    padding: 2em 3em 2.5em;
+    padding: 0 4em 0.1em 4em;
+  }
+
+  #main > .inner > section {
+    padding: 4em 0 2em 0;
   }
 
   #main > .banner > .inner {
-    padding: 0 3em;
+    padding: 0 4em;
   }
 
   #main > .banner h1 {
@@ -735,7 +757,17 @@ a.opener.active::after {
   }
 
   #main > .inner {
-    padding: 2em;
+    padding: 0 2em 0.1em 2em;
+  }
+
+  #main > .inner > section {
+    padding: 3em 0 1em 0;
+  }
+
+  #sidebar > .inner {
+    position: relative;
+    height: auto;
+    overflow-y: visible;
   }
 
   #main > .banner > .inner {
@@ -758,7 +790,7 @@ a.opener.active::after {
   }
 
   #main > .inner {
-    padding: 1.5em 1.25em;
+    padding: 0 1.25em 0.1em 1.25em;
   }
 
   #main > .banner {
