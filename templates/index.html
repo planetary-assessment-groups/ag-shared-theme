@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import "macros/collections.html" as collections %}
+{% block content %}
+  {{ section.content | safe }}
+  {% set meetings = get_section(path="meetings/_index.md") %}
+  {% set news = get_section(path="news/_index.md") %}
+  {% set documents = get_section(path="documents/_index.md") %}
+  {% set today = now() | date(format="%Y-%m-%d") %}
+  <section>
+    <h2>News</h2>
+    {{ collections::featured_pages(pages=news.pages, limit=4) }}
+  </section>
+  <section>
+    <h2>Documents</h2>
+    {{ collections::featured_pages(pages=documents.pages, limit=6) }}
+  </section>
+  <section>
+    <h2>Meetings</h2>
+    {{ collections::meeting_pages(pages=meetings.pages, today=today, limit=3) }}
+  </section>
+{% endblock content %}

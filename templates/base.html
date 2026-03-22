@@ -1,0 +1,34 @@
+{% import "macros/collections.html" as collections %}
+{% set nav = load_data(path="data/navigation.yaml", required=false) %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+  >
+  <link rel="stylesheet" href="{{ get_url(path='css/theme.css') }}">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <h1 class="site-title">{{ config.title }}</h1>
+      {% if nav and nav.main %}
+      <nav>
+        <ul>
+          {% for item in nav.main %}
+            {{ collections::nav_item(item=item) }}
+          {% endfor %}
+        </ul>
+      </nav>
+      {% endif %}
+    </aside>
+    <main class="content">
+      {% block content %}{% endblock content %}
+    </main>
+  </div>
+</body>
+</html>

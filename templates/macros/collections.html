@@ -1,0 +1,54 @@
+{% macro nav_item(item) %}
+<li>
+  {% if item.url %}
+    <a href="{{ item.url }}"{% if item.external or item.open_in_new_window %} target="_blank" rel="noreferrer"{% endif %}>{{ item.label }}</a>
+  {% else %}
+    <span>{{ item.label }}</span>
+  {% endif %}
+  {% if item.children and item.children | length > 0 %}
+    <ul>
+      {% for child in item.children %}
+        {{ self::nav_item(item=child) }}
+      {% endfor %}
+    </ul>
+  {% endif %}
+</li>
+{% endmacro nav_item %}
+
+{% macro featured_pages(pages, limit=5) %}
+<ul class="card-list">
+  {% set_global has_pinned = false %}
+  {% for page in pages %}
+    {% if page.extra and page.extra.pinned %}
+      {% set_global has_pinned = true %}
+      <li>
+        <a href="{{ page.permalink }}">{{ page.title }}</a>
+        {% if page.date %}<small>{{ page.date | date(format="%Y-%m-%d") }}</small>{% endif %}
+      </li>
+    {% endif %}
+  {% endfor %}
+  {% if not has_pinned %}
+    {% for page in pages %}
+      {% if loop.index <= limit %}
+        <li>
+          <a href="{{ page.permalink }}">{{ page.title }}</a>
+          {% if page.date %}<small>{{ page.date | date(format="%Y-%m-%d") }}</small>{% endif %}
+        </li>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+</ul>
+{% endmacro featured_pages %}
+
+{% macro meeting_pages(pages, today, limit=3) %}
+<ul class="card-list">
+  {% for page in pages %}
+    {% if loop.index <= limit %}
+      <li>
+        <a href="{{ page.permalink }}">{{ page.title }}</a>
+        {% if page.date %}<small>{{ page.date | date(format="%Y-%m-%d") }}</small>{% endif %}
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>
+{% endmacro meeting_pages %}
