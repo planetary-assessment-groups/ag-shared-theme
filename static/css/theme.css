@@ -672,6 +672,7 @@ a.opener.active::after {
 
   #main > .inner {
     padding: 0 5em 0.1em 5em;
+    margin-top:3em;
   }
 
   #main > .inner > section {
