@@ -9,7 +9,7 @@
 :root {
   --ag-accent: #993300;
   --ag-accent-hover: #006699;
-  --ag-sidebar-link: #0033cc;
+  --ag-sidebar-link: #333333;
   --ag-sidebar-hover: #006699;
   --ag-heading-color: #3d4449;
   --ag-text: #121212;
@@ -340,6 +340,28 @@ header.major > :last-child {
   padding: 0 0.75em 0.5em 0;
 }
 
+/* ----- Definition-list pattern: bold label + indented details ----- */
+/* A <p> whose only child element is <strong> acts as a group label */
+article p:has(> strong:only-child) {
+  margin-top: 1.2em;
+  margin-bottom: 0.15em;
+}
+
+/* Reduce top gap when label directly follows a heading */
+article h2 + p:has(> strong:only-child),
+article h3 + p:has(> strong:only-child) {
+  margin-top: 0.4em;
+}
+
+/* Indent up to four consecutive detail paragraphs after a label */
+article p:has(> strong:only-child) + p:not(:has(> strong:only-child)),
+article p:has(> strong:only-child) + p:not(:has(> strong:only-child)) + p:not(:has(> strong:only-child)),
+article p:has(> strong:only-child) + p:not(:has(> strong:only-child)) + p:not(:has(> strong:only-child)) + p:not(:has(> strong:only-child)),
+article p:has(> strong:only-child) + p:not(:has(> strong:only-child)) + p:not(:has(> strong:only-child)) + p:not(:has(> strong:only-child)) + p:not(:has(> strong:only-child)) {
+  margin-left: 1.5em;
+  margin-bottom: 0.2em;
+}
+
 /* ----- Buttons ----- */
 .button,
 a.button-main {
@@ -510,8 +532,8 @@ a.image-link img {
   color: var(--ag-sidebar-link);
   cursor: pointer;
   display: block;
-  font-size: 0.9em;
-  letter-spacing: 0.075em;
+  font-size: 0.75em;
+  letter-spacing: 0.02em;
   line-height: 1.4;
   padding: 0.625em 0;
   text-transform: uppercase;
@@ -528,7 +550,7 @@ a.image-link img {
 #menu > ul > li {
   border-top: solid 1px var(--ag-border);
   margin: 0;
-  padding: 0;
+  padding: 0.25em 0;
 }
 
 #menu > ul > li:first-child {

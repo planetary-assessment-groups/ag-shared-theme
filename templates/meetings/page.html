@@ -18,7 +18,11 @@
           <p><i class="fa fa-desktop"></i>&nbsp; {{ page.extra.format }}</p>
         {% endif %}
         {% if page.extra.registration_url %}
-          <p><a href="{{ page.extra.registration_url }}" target="_blank" rel="noreferrer">Registration&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a></p>
+          {% set meeting_end = page.extra.end_date | default(value=page.date) | date(format="%Y-%m-%d") %}
+          {% set today = now() | date(format="%Y-%m-%d") %}
+          {% if meeting_end >= today %}
+            <p><a href="{{ page.extra.registration_url }}" target="_blank" rel="noreferrer">Registration&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a></p>
+          {% endif %}
         {% endif %}
       </div>
       {{ page.content | safe }}
