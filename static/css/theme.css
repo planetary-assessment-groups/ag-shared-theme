@@ -109,7 +109,7 @@ section {
 
 /* ----- Base Typography ----- */
 html {
-  font-size: 13pt;
+  font-size: 11pt;
 }
 
 body {
@@ -181,7 +181,7 @@ hr {
 
 a {
   color: var(--ag-accent);
-  text-decoration: none;
+  text-decoration: underline;
   transition: color 0.2s;
 }
 a:hover {

@@ -18,7 +18,7 @@
           <p><i class="fa fa-desktop"></i>&nbsp; {{ page.extra.format }}</p>
         {% endif %}
         {% if page.extra.registration_url %}
-          <p><a class="button-main" href="{{ page.extra.registration_url }}" target="_blank" rel="noreferrer">Registration&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a></p>
+          <p><a href="{{ page.extra.registration_url }}" target="_blank" rel="noreferrer">Registration&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a></p>
         {% endif %}
       </div>
       {{ page.content | safe }}
