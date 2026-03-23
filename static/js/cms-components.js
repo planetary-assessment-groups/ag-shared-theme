@@ -1,4 +1,18 @@
 CMS.registerEditorComponent({
+  id: 'highlight',
+  label: 'Highlight Box',
+  icon: 'quote',
+  fields: [
+    { name: 'body', label: 'Content', widget: 'markdown' },
+  ],
+  pattern: /\{%\s*highlight\(\)\s*%\}([\s\S]*?)\{%\s*end\s*%\}/,
+  fromBlock: (match) => ({ body: (match[1] || '').trim() }),
+  toBlock: ({ body }) => `{% highlight() %}\n${body || ''}\n{% end %}`,
+  toPreview: ({ body }) =>
+    `<div style="border:1px solid #cecece;background:#fde9c4;padding:1em;margin-bottom:1.5em">${body || ''}</div>`,
+});
+
+CMS.registerEditorComponent({
   id: 'image-card',
   label: 'Image Card',
   icon: 'image',

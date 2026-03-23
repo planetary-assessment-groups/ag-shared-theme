@@ -1,0 +1,10 @@
+<div class="embed-container">
+  <iframe
+    src="{{ src }}"
+    width="{{ width | default(value='100%') }}"
+    height="{{ height | default(value='600') }}"
+    frameborder="0"
+    loading="lazy"
+    {% if title %}title="{{ title }}"{% endif %}
+  ></iframe>
+</div>
