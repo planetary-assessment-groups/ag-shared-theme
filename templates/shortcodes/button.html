@@ -1,0 +1,4 @@
+<a class="button-main"
+  href="{{ href }}"
+  {% if new_tab %}target="_blank" rel="noreferrer"{% endif %}
+>{{ label }}{% if icon is defined %}{% if icon %}&nbsp;&nbsp;<i class="fa fa-{{ icon }}"></i>{% endif %}{% else %}&nbsp;&nbsp;<i class="fa fa-angle-right"></i>{% endif %}</a>
