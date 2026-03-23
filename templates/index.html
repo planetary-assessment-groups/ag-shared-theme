@@ -5,11 +5,12 @@
     {{ section.content | safe }}
   </section>
 
-  {% set news = get_section(path="news/_index.md") %}
   {% set documents = get_section(path="documents/_index.md") %}
   {% set meetings = get_section(path="meetings/_index.md") %}
   {% set today = now() | date(format="%Y-%m-%d") %}
 
+  {% if config.extra.show_news | default(value=false) %}
+  {% set news = get_section(path="news/_index.md") %}
   <section>
     <header class="major">
       <h3>News</h3>
@@ -19,6 +20,7 @@
     <a class="button-main" href="{{ config.extra.news_archive_url }}">News Archive&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a>
     {% endif %}
   </section>
+  {% endif %}
 
   <section>
     <header class="major">
