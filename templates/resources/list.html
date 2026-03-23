@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+  <section>
+    <header class="major">
+      <h2>Resources</h2>
+    </header>
+    <ul class="card-list">
+      {% for term in terms %}
+        <li>
+          <a href="{{ term.permalink }}">{{ term.name }}</a>
+          <small>{{ term.pages | length }} documents</small>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endblock content %}

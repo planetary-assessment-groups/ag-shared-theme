@@ -574,7 +574,7 @@ a.image-link img {
 .highlight {
   border: 1px solid #cecece;
   background: #fde9c4;
-  padding: 1em;
+  padding: 0.75em 1em 1em 1em;
   margin-bottom: 1.5em;
 }
 

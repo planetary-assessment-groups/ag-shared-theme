@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% import "macros/collections.html" as collections %}
+{% block content %}
+  <section>
+    <header class="major">
+      <h2>{{ term.name }}</h2>
+    </header>
+    {{ collections::page_list(pages=term.pages) }}
+  </section>
+{% endblock content %}

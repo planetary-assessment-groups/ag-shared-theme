@@ -5,9 +5,11 @@
       <header class="major">
         <h2>{{ page.title }}</h2>
       </header>
-      {% if page.extra.doc_type or page.date %}
+      {% if page.taxonomies.resources or page.date %}
       <p>
-        {% if page.extra.doc_type %}<strong>{{ page.extra.doc_type }}</strong> &middot; {% endif %}
+        {% if page.taxonomies.resources %}
+          {% for dt in page.taxonomies.resources %}<strong><a href="{{ get_taxonomy_url(kind='resources', name=dt) }}">{{ dt }}</a></strong>{% endfor %} &middot;
+        {% endif %}
         {% if page.date %}{{ page.date | date(format="%B %e, %Y") }}{% endif %}
       </p>
       {% endif %}
