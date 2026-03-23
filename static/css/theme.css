@@ -478,6 +478,58 @@ a.image-link img {
   height: auto;
 }
 
+/* ----- Image Cards (shortcode) ----- */
+.image-card {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 0.5em 1.2em;
+  text-align: center;
+}
+
+/* Size variants */
+.image-card--small  { width: calc(16.66% - 1em); }
+.image-card--medium { width: calc(25% - 1em); }
+.image-card--large  { width: calc(33.33% - 1em); }
+.image-card--half   { width: calc(50% - 1em); }
+.image-card--full   { width: 100%; margin-left: 0; margin-right: 0; }
+
+/* Alignment variants */
+/* .image-card--left uses default inline-block flow — no overrides needed */
+.image-card--center { display: block; margin-left: auto; margin-right: auto; }
+.image-card--right  { float: right; margin-left: 1em; }
+
+/* Image styling */
+.image-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 3px solid #fff;
+  transition: border-color 0.3s;
+}
+
+.image-card a:hover img {
+  border-color: var(--ag-accent-hover);
+}
+
+/* Label */
+.image-card p {
+  margin: 0.4em 0 0;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 900px) {
+  .image-card--small,
+  .image-card--medium { width: calc(50% - 1em); }
+  .image-card--large  { width: calc(50% - 1em); }
+}
+
+@media (max-width: 480px) {
+  .image-card--small,
+  .image-card--medium,
+  .image-card--large,
+  .image-card--half { width: 100%; margin-left: 0; margin-right: 0; }
+}
+
 /* ----- Flex Feature Row (image + text) ----- */
 .flex-container {
   display: flex;

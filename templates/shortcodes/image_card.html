@@ -1,0 +1,10 @@
+{% set size_class = size | default(value="medium") %}
+{% set align_class = align | default(value="left") %}
+<div class="image-card image-card--{{ size_class }} image-card--{{ align_class }}">
+  {% if link %}<a href="{{ link }}">{% endif %}
+    <img src="{{ src }}" alt="{{ alt | default(value='') }}" loading="lazy">
+  {% if link %}</a>{% endif %}
+  {% if label %}
+  <p><strong>{% if link %}<a href="{{ link }}">{{ label }}</a>{% else %}{{ label }}{% endif %}</strong></p>
+  {% endif %}
+</div>
