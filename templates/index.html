@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% import "macros/collections.html" as collections %}
 {% block content %}
-  {% set site_settings = load_data(path="data/site_settings.yaml", required=false) %}
+  {% set site_settings = load_data(path="data/site_settings.yaml") %}
   <section>
     {{ section.content | safe }}
   </section>
@@ -9,10 +9,8 @@
   {% set documents = get_section(path="documents/_index.md") %}
   {% set meetings = get_section(path="meetings/_index.md") %}
   {% set today = now() | date(format="%Y-%m-%d") %}
-  {% set news_archive_url = config.extra.news_archive_url | default(value="") %}
-  {% if site_settings and site_settings.news_archive_url %}{% set news_archive_url = site_settings.news_archive_url %}{% endif %}
-  {% set meetings_archive_url = config.extra.meetings_archive_url | default(value="") %}
-  {% if site_settings and site_settings.meetings_archive_url %}{% set meetings_archive_url = site_settings.meetings_archive_url %}{% endif %}
+  {% set news_archive_url = site_settings.news_archive_url | default(value="") %}
+  {% set meetings_archive_url = site_settings.meetings_archive_url | default(value="") %}
   {% set show_news = config.extra.show_news | default(value=false) %}
   {% set_global pinned_news = [] %}
 

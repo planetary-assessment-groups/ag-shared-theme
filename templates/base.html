@@ -1,18 +1,12 @@
 {% import "macros/collections.html" as collections %}
 {% set nav = load_data(path="data/navigation.yaml", required=false) %}
-{% set site_settings = load_data(path="data/site_settings.yaml", required=false) %}
-{% set banner_image = config.extra.banner_image | default(value="") %}
-{% if site_settings and site_settings.banner_image %}{% set banner_image = site_settings.banner_image %}{% endif %}
-{% set logo = config.extra.logo | default(value="") %}
-{% if site_settings and site_settings.logo %}{% set logo = site_settings.logo %}{% endif %}
-{% set banner_title = config.extra.banner_title | default(value=config.title) %}
-{% if site_settings and site_settings.banner_title %}{% set banner_title = site_settings.banner_title %}{% endif %}
-{% set social = config.extra.social | default(value=false) %}
-{% if site_settings and site_settings.social %}{% set social = site_settings.social %}{% endif %}
-{% set footer_links = config.extra.footer_links | default(value=[]) %}
-{% if site_settings and site_settings.footer_links %}{% set footer_links = site_settings.footer_links %}{% endif %}
-{% set copyright_text = config.extra.copyright | default(value=config.title) %}
-{% if site_settings and site_settings.copyright %}{% set copyright_text = site_settings.copyright %}{% endif %}
+{% set site_settings = load_data(path="data/site_settings.yaml") %}
+{% set banner_image = site_settings.banner_image | default(value="") %}
+{% set logo = site_settings.logo | default(value="") %}
+{% set banner_title = site_settings.banner_title | default(value="") %}
+{% set social = site_settings.social | default(value=false) %}
+{% set footer_links = site_settings.footer_links | default(value=[]) %}
+{% set copyright_text = site_settings.copyright | default(value="") %}
 <!doctype html>
 <html lang="en">
 <head>

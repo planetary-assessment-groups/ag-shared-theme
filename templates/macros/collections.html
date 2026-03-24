@@ -26,7 +26,7 @@
     {% if loop.index <= limit %}
     <li>
       <a href="{{ page.permalink }}">{{ page.title }}</a>
-      {% if page.description %}<small>{{ page.description }}</small>{% elif page.extra.description %}<small>{{ page.extra.description }}</small>{% endif %}
+      {% if page.description %}<small>{{ page.description }}</small>{% endif %}
       {% if page.date %}<small>{{ page.date | date(format="%B %e, %Y") }}</small>{% endif %}
     </li>
     {% endif %}
@@ -57,7 +57,7 @@
   {% for page in pages %}
     <li>
       <a href="{{ page.permalink }}">{{ page.title }}</a>
-      {% if page.description %}<small>{{ page.description }}</small>{% elif page.extra.description %}<small>{{ page.extra.description }}</small>{% endif %}
+      {% if page.description %}<small>{{ page.description }}</small>{% endif %}
       {% if page.extra.location %}<small>{{ page.extra.location }}</small>{% endif %}
       {% if page.date %}<small>{{ page.date | date(format="%B %e, %Y") }}</small>{% endif %}
     </li>
@@ -70,7 +70,7 @@
   {% for page in pages %}
     <li>
       <a href="{{ page.permalink }}">{{ page.title }}</a>
-      {% if page.description %}<small>{{ page.description }}</small>{% elif page.extra.description %}<small>{{ page.extra.description }}</small>{% endif %}
+      {% if page.description %}<small>{{ page.description }}</small>{% endif %}
       {% if page.date %}<small>{{ page.date | date(format="%B %e, %Y") }}</small>{% endif %}
     </li>
   {% endfor %}
