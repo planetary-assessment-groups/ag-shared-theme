@@ -38,6 +38,16 @@
       {% endblock banner %}
       <div class="inner">
         {% block content %}{% endblock content %}
+        <footer id="footer">
+          {% if footer_links | length > 0 %}
+          <p>
+            {% for link in footer_links %}
+            <a href="{{ link.url }}"{% if link.open_in_new_window %} target="_blank" rel="noreferrer"{% endif %}>{{ link.label }}</a>{% if not loop.last %} | {% endif %}
+            {% endfor %}
+          </p>
+          {% endif %}
+          <p>&copy; {{ now() | date(format="%Y") }} {{ copyright_text }}</p>
+        </footer>
       </div>
     </div>
 
@@ -88,17 +98,6 @@
           </ul>
         </div>
         {% endif %}
-
-        <footer id="footer">
-          {% if footer_links | length > 0 %}
-          <p>
-            {% for link in footer_links %}
-            <a href="{{ link.url }}"{% if link.external %} target="_blank" rel="noreferrer"{% endif %}>{{ link.label }}</a>{% if not loop.last %} | {% endif %}
-            {% endfor %}
-          </p>
-          {% endif %}
-          <p>&copy; {{ now() | date(format="%Y") }} {{ copyright_text }}</p>
-        </footer>
       </div>
     </div>
 

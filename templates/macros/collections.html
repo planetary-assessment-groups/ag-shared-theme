@@ -5,7 +5,7 @@
     <ul>
       {% if item.url %}
         <li>
-          <a href="{{ item.url }}"{% if item.external or item.open_in_new_window %} target="_blank" rel="noreferrer"{% endif %}>{{ item.label }}</a>
+          <a href="{{ item.url }}"{% if item.open_in_new_window %} target="_blank" rel="noreferrer"{% endif %}>{{ item.label }}</a>
         </li>
       {% endif %}
       {% for child in item.children %}
@@ -13,7 +13,7 @@
       {% endfor %}
     </ul>
   {% elif item.url %}
-    <a href="{{ item.url }}"{% if item.external or item.open_in_new_window %} target="_blank" rel="noreferrer"{% endif %}>{{ item.label }}</a>
+    <a href="{{ item.url }}"{% if item.open_in_new_window %} target="_blank" rel="noreferrer"{% endif %}>{{ item.label }}</a>
   {% else %}
     <span>{{ item.label }}</span>
   {% endif %}

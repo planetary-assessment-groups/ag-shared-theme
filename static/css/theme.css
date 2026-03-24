@@ -743,9 +743,11 @@ a.opener.active::after {
 
 /* Copyright Footer */
 #footer {
+  border-top: solid 1px var(--ag-border);
   font-size: 0.75em;
   color: var(--ag-text-light);
-  margin-top: 2em;
+  margin-top: 3em;
+  padding-top: 1.5em;
 }
 
 #footer a {
@@ -758,6 +760,10 @@ a.opener.active::after {
 
 #footer p {
   margin-bottom: 0.5em;
+}
+
+#footer p:last-child {
+  margin-bottom: 0;
 }
 
 /* ----- Mobile Sidebar Toggle ----- */
