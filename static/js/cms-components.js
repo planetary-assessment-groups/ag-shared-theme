@@ -76,3 +76,72 @@ CMS.registerEditorComponent({
      </div>`;
   },
 });
+
+CMS.registerEditorComponent({
+  id: 'button',
+  label: 'Button',
+  icon: 'smart_button',
+  fields: [
+    { name: 'href', label: 'URL', widget: 'string' },
+    { name: 'label', label: 'Label', widget: 'string' },
+    { name: 'icon', label: 'Icon', widget: 'string', required: false },
+    { name: 'new_tab', label: 'Open In New Tab', widget: 'boolean', required: false, default: false },
+  ],
+  pattern: /\{\{\s*button\(([^)]*)\)\s*\}\}/,
+  fromBlock: (match) => {
+    const str = match[1] || '';
+    const get = (key) => {
+      const m = str.match(new RegExp(`${key}="([^"]*)"`));
+      return m ? m[1] : null;
+    };
+    return {
+      href: get('href') || '',
+      label: get('label') || '',
+      icon: get('icon'),
+      new_tab: /\bnew_tab\s*=\s*true\b/.test(str),
+    };
+  },
+  toBlock: ({ href, label, icon, new_tab }) => {
+    let params = `href="${href || ''}", label="${label || ''}"`;
+    if (icon !== null && icon !== undefined) params += `, icon="${icon}"`;
+    if (new_tab) params += ', new_tab=true';
+    return `{{ button(${params}) }}`;
+  },
+  toPreview: ({ href, label }) =>
+    `<p><a class="button-main" href="${href || '#'}">${label || 'Button'}&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a></p>`,
+});
+
+CMS.registerEditorComponent({
+  id: 'embed',
+  label: 'Embed',
+  icon: 'web_asset',
+  fields: [
+    { name: 'src', label: 'Source URL', widget: 'string' },
+    { name: 'width', label: 'Width', widget: 'string', required: false },
+    { name: 'height', label: 'Height', widget: 'string', required: false },
+    { name: 'title', label: 'Title', widget: 'string', required: false },
+  ],
+  pattern: /\{\{\s*embed\(([^)]*)\)\s*\}\}/,
+  fromBlock: (match) => {
+    const str = match[1] || '';
+    const get = (key) => {
+      const m = str.match(new RegExp(`${key}="([^"]*)"`));
+      return m ? m[1] : '';
+    };
+    return {
+      src: get('src'),
+      width: get('width'),
+      height: get('height'),
+      title: get('title'),
+    };
+  },
+  toBlock: ({ src, width, height, title }) => {
+    let params = `src="${src || ''}"`;
+    if (width && width !== '100%') params += `, width="${width}"`;
+    if (height && height !== '600') params += `, height="${height}"`;
+    if (title) params += `, title="${title}"`;
+    return `{{ embed(${params}) }}`;
+  },
+  toPreview: ({ src, title }) =>
+    `<div style="border:1px solid #cecece;padding:1em;margin-bottom:1.5em"><strong>${title || 'Embedded content'}</strong><p>${src || ''}</p></div>`,
+});

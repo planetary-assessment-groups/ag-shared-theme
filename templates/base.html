@@ -1,5 +1,18 @@
 {% import "macros/collections.html" as collections %}
 {% set nav = load_data(path="data/navigation.yaml", required=false) %}
+{% set site_settings = load_data(path="data/site_settings.yaml", required=false) %}
+{% set banner_image = config.extra.banner_image | default(value="") %}
+{% if site_settings and site_settings.banner_image %}{% set banner_image = site_settings.banner_image %}{% endif %}
+{% set logo = config.extra.logo | default(value="") %}
+{% if site_settings and site_settings.logo %}{% set logo = site_settings.logo %}{% endif %}
+{% set banner_title = config.extra.banner_title | default(value=config.title) %}
+{% if site_settings and site_settings.banner_title %}{% set banner_title = site_settings.banner_title %}{% endif %}
+{% set social = config.extra.social | default(value=false) %}
+{% if site_settings and site_settings.social %}{% set social = site_settings.social %}{% endif %}
+{% set footer_links = config.extra.footer_links | default(value=[]) %}
+{% if site_settings and site_settings.footer_links %}{% set footer_links = site_settings.footer_links %}{% endif %}
+{% set copyright_text = config.extra.copyright | default(value=config.title) %}
+{% if site_settings and site_settings.copyright %}{% set copyright_text = site_settings.copyright %}{% endif %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,15 +29,15 @@
     <!-- Main -->
     <div id="main">
       {% block banner %}
-      {% if config.extra.banner_image %}
-      <div class="banner" style="background-image: url('{{ config.extra.banner_image }}');">
+      {% if banner_image %}
+      <div class="banner" style="background-image: url('{{ banner_image }}');">
         <div class="inner">
-          {% if config.extra.logo %}
+          {% if logo %}
           <a class="main-logo" href="/">
-            <img src="{{ config.extra.logo }}" alt="{{ config.title }} logo" />
+            <img src="{{ logo }}" alt="{{ config.title }} logo" />
           </a>
           {% endif %}
-          <h1>{{ config.extra.banner_title | default(value=config.title) }}</h1>
+          <h1>{{ banner_title }}</h1>
         </div>
       </div>
       {% endif %}
@@ -54,43 +67,43 @@
 
         {% block sidebar %}{% endblock sidebar %}
 
-        {% if config.extra.social %}
+        {% if social %}
         <div class="sidebar-footer">
           <header class="major">
             <h2>Connect With Us</h2>
           </header>
           <ul class="contact-icons">
-            {% if config.extra.social.home %}
-            <li><a href="{{ config.extra.social.home }}" aria-label="Home"><i class="fa fa-home"></i></a></li>
+            {% if social.home %}
+            <li><a href="{{ social.home }}" aria-label="Home"><i class="fa fa-home"></i></a></li>
             {% endif %}
-            {% if config.extra.social.twitter %}
-            <li><a href="{{ config.extra.social.twitter }}" target="_blank" rel="noreferrer" aria-label="X / Twitter"><i class="fa-brands fa-square-x-twitter"></i></a></li>
+            {% if social.twitter %}
+            <li><a href="{{ social.twitter }}" target="_blank" rel="noreferrer" aria-label="X / Twitter"><i class="fa-brands fa-square-x-twitter"></i></a></li>
             {% endif %}
-            {% if config.extra.social.facebook %}
-            <li><a href="{{ config.extra.social.facebook }}" target="_blank" rel="noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a></li>
+            {% if social.facebook %}
+            <li><a href="{{ social.facebook }}" target="_blank" rel="noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a></li>
             {% endif %}
-            {% if config.extra.social.youtube %}
-            <li><a href="{{ config.extra.social.youtube }}" target="_blank" rel="noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a></li>
+            {% if social.youtube %}
+            <li><a href="{{ social.youtube }}" target="_blank" rel="noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a></li>
             {% endif %}
-            {% if config.extra.social.instagram %}
-            <li><a href="{{ config.extra.social.instagram }}" target="_blank" rel="noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
+            {% if social.instagram %}
+            <li><a href="{{ social.instagram }}" target="_blank" rel="noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
             {% endif %}
-            {% if config.extra.social.linkedin %}
-            <li><a href="{{ config.extra.social.linkedin }}" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a></li>
+            {% if social.linkedin %}
+            <li><a href="{{ social.linkedin }}" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a></li>
             {% endif %}
           </ul>
         </div>
         {% endif %}
 
         <footer id="footer">
-          {% if config.extra.footer_links %}
+          {% if footer_links | length > 0 %}
           <p>
-            {% for link in config.extra.footer_links %}
+            {% for link in footer_links %}
             <a href="{{ link.url }}"{% if link.external %} target="_blank" rel="noreferrer"{% endif %}>{{ link.label }}</a>{% if not loop.last %} | {% endif %}
             {% endfor %}
           </p>
           {% endif %}
-          <p>&copy; {{ now() | date(format="%Y") }} {{ config.extra.copyright | default(value=config.title) }}</p>
+          <p>&copy; {{ now() | date(format="%Y") }} {{ copyright_text }}</p>
         </footer>
       </div>
     </div>

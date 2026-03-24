@@ -15,6 +15,8 @@
       {% endif %}
       {% if page.extra.file %}
       <p><a class="button-main" href="{{ page.extra.file }}" target="_blank" rel="noreferrer">Download Document&nbsp;&nbsp;<i class="fa fa-download"></i></a></p>
+      {% elif page.extra.external_url %}
+      <p><a class="button-main" href="{{ page.extra.external_url }}" target="_blank" rel="noreferrer">View Document&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a></p>
       {% endif %}
       {{ page.content | safe }}
     </article>

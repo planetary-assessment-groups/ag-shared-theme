@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% import "macros/collections.html" as collections %}
 {% block content %}
+  {% set site_settings = load_data(path="data/site_settings.yaml", required=false) %}
   <section>
     {{ section.content | safe }}
   </section>
@@ -8,16 +9,37 @@
   {% set documents = get_section(path="documents/_index.md") %}
   {% set meetings = get_section(path="meetings/_index.md") %}
   {% set today = now() | date(format="%Y-%m-%d") %}
+  {% set news_archive_url = config.extra.news_archive_url | default(value="") %}
+  {% if site_settings and site_settings.news_archive_url %}{% set news_archive_url = site_settings.news_archive_url %}{% endif %}
+  {% set meetings_archive_url = config.extra.meetings_archive_url | default(value="") %}
+  {% if site_settings and site_settings.meetings_archive_url %}{% set meetings_archive_url = site_settings.meetings_archive_url %}{% endif %}
+  {% set show_news = config.extra.show_news | default(value=false) %}
+  {% set_global pinned_news = [] %}
 
-  {% if config.extra.show_news | default(value=false) %}
+  {% if show_news %}
   {% set news = get_section(path="news/_index.md") %}
+  {% set_global pinned_news = news.pages | filter(attribute="extra.pinned", value=true) %}
+  {% endif %}
+  {% set pinned_documents = documents.pages | filter(attribute="extra.pinned", value=true) %}
+  {% set pinned_items = pinned_news | concat(with=pinned_documents) %}
+  {% if pinned_items | length > 0 %}
+  {% set pinned_items = pinned_items | sort(attribute="date") | reverse %}
+  <section>
+    <header class="major">
+      <h3>Pinned</h3>
+    </header>
+    {{ collections::pinned_pages(pages=pinned_items) }}
+  </section>
+  {% endif %}
+
+  {% if show_news %}
   <section>
     <header class="major">
       <h3>News</h3>
     </header>
     {{ collections::featured_pages(pages=news.pages, limit=4) }}
-    {% if config.extra.news_archive_url %}
-    <a class="button-main" href="{{ config.extra.news_archive_url }}">News Archive&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a>
+    {% if news_archive_url %}
+    <a class="button-main" href="{{ news_archive_url }}">News Archive&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a>
     {% endif %}
   </section>
   {% endif %}
@@ -27,8 +49,8 @@
       <h3>Recent Meetings</h3>
     </header>
     {{ collections::meeting_pages(pages=meetings.pages, today=today, limit=3) }}
-    {% if config.extra.meetings_archive_url %}
-    <a class="button-main" href="{{ config.extra.meetings_archive_url }}">Meeting Archive&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a>
+    {% if meetings_archive_url %}
+    <a class="button-main" href="{{ meetings_archive_url }}">Meeting Archive&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a>
     {% endif %}
   </section>
 
