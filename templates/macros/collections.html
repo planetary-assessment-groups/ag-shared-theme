@@ -1,7 +1,7 @@
 {% macro nav_item(item) %}
 <li>
   {% if item.children and item.children | length > 0 %}
-    <span class="opener">{{ item.label }}</span>
+    <span class="opener active">{{ item.label }}</span>
     <ul>
       {% if item.url %}
         <li>
@@ -56,7 +56,17 @@
 <ul class="card-list">
   {% for page in pages %}
     <li>
-      <a href="{{ page.permalink }}">{{ page.title }}</a>
+      {% if page.content and page.extra.file %}
+        <a href="{{ page.permalink }}">{{ page.title }}</a>
+      {% elif page.extra.file %}
+        <a href="{{ page.extra.file }}" target="_blank" rel="noreferrer">{{ page.title }}&nbsp;&nbsp;<i class="fa fa-download"></i></a>
+      {% elif page.content and page.extra.external_url %}
+        <a href="{{ page.permalink }}">{{ page.title }}</a>
+      {% elif page.extra.external_url %}
+        <a href="{{ page.extra.external_url }}" target="_blank" rel="noreferrer">{{ page.title }}&nbsp;&nbsp;<i class="fa fa-external-link"></i></a>
+      {% else %}
+        <a href="{{ page.permalink }}">{{ page.title }}</a>
+      {% endif %}
       {% if page.description %}<small>{{ page.description }}</small>{% endif %}
       {% if page.extra.location %}<small>{{ page.extra.location }}</small>{% endif %}
       {% if page.date %}<small>{{ page.date | date(format="%B %e, %Y") }}</small>{% endif %}
